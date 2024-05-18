@@ -6,7 +6,7 @@ const bgrdImg = video != true ? `url(${content?.image})` : 'url()'
   {
     video &&
     <div class="overflow-hidden">
-      <video class=" min-w-full max-w-[150vh] min-h-full max-h-full h-[60vh] md:h-full" autoplay loop muted>
+      <video class=" min-w-full max-w-[150vh] min-h-full max-h-full h-[60vh] md:h-full" autoplay loop muted playsinline>
         <source src={content.video} type="video/mp4">
         Your browser does not support the video tag.
       </video>
