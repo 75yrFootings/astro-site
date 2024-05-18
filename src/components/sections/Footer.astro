@@ -1,0 +1,16 @@
+---
+import Links from '../nav/Links.astro';
+import Logo from '../nav/Logo.astro';
+const date = new Date().getFullYear()
+---
+<footer class="bg-black w-full">
+  <div class="w-full max-w-screen-2xl mx-auto p-4 md:py-8">
+      <div class="sm:flex sm:items-center sm:justify-between">
+        <Logo class="scale-75" />
+        <Links class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 space-x-2" />
+      </div>
+      <hr class="my-6 border-gray-200 sm:mx-auto lg:my-8" />
+      <span class="block text-sm text-gray-400 sm:text-center">© {date} <a href="/" class="hover:underline">75yr Footings™</a>. All Rights Reserved.</span>
+  </div>
+</footer>
+

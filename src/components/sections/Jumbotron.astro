@@ -1,0 +1,23 @@
+---
+// Jumbotro with Image and text if present
+import Button from "../utils/Button.astro"
+const {pageTitle, content} = Astro.props
+const bgrdImg = `url('${content.image}')`
+---
+<section class="bg-center lg:bg-top bg-no-repeat bg-cover bg-gray-700 bg-blend-multiply">
+  <div class="px-4 mx-auto max-w-screen-xl text-center py-24 lg:py-56">
+      <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">{!pageTitle ? content?.title : pageTitle}</h1>
+      <p class="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48">{content?.body}</p>
+      <div class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0">
+        {
+          content?.displayButton &&
+          <Button text={content?.button.text} link={content?.button.link} class="bg-brand-yellow text-gray-900 hover:bg-accent-green mx-auto" />
+        }
+      </div>
+  </div>
+</section>
+<style define:vars={{bgrdImg}}>
+  section {
+    background-image: var(--bgrdImg);
+  }
+</style>

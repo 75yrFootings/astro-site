@@ -1,0 +1,56 @@
+---
+import { sanityClient } from 'sanity:client';
+import Layout from "../../layouts/Layout.astro";
+import Jumbotron from "../../components/sections/Jumbotron.astro";
+import ContentBlock from '../../components/sections/ContentBlock.astro';
+import Columns from '../../components/sections/Columns.astro';
+import FAQs from '../../components/sections/FAQs.astro';
+
+
+const query = `*[_type == "page" && title == "Articles"]{
+  title,
+  "page": pageBuilder[],
+  pageBuilder[]{
+    _type == "jumbotron" => {
+      _type,
+      title,
+      body,
+      "image": image.asset->url,
+      displayButton,
+      button
+    },
+    _type == "contentBlock" => {
+      _type,
+      name,
+      blockContent,
+    },
+  },
+  featuredPosts[]-> {
+    title,
+    "slug": slug.current,
+    publishedAt,
+    author->{name},
+    "mainImage": mainImage.asset->url,
+    body,
+  }
+}`
+const data = await sanityClient.fetch(query);
+const {
+  title = data[0].title,
+  content = data[0],
+  featuredPosts = data[0].featuredPosts
+} = Astro.props
+console.log(featuredPosts[0])
+---
+<Layout title={title}>
+  {
+    content.pageBuilder?.map((section: any) => {
+      if (section._type == 'jumbotron') {
+        return <Jumbotron content={section} />
+      }
+      if (section._type == 'contentBlock') {
+        return <ContentBlock content={section} />
+      }
+    })
+  }
+</Layout>

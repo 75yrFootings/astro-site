@@ -1,0 +1,10 @@
+---
+import PortableText from "../PortableText.astro";
+const {content} = Astro.props
+---
+<section class="mx-auto max-w-screen-xl my-20 p-4">
+  <h1 class="text-3xl lg:text-5xl font-extrabold uppercase text-center my-6">{content?.name}</h1>
+  <div class="mx-auto mb-6 font-light lg:mb-8 text-xl lg:text-2xl prose">
+    <PortableText portableText={content?.blockContent} />
+  </div>
+</section>

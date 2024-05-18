@@ -1,0 +1,7 @@
+---
+// Basic Button
+const {text, link, class: classNames} = Astro.props
+---
+<a href={link} class:list={["inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center rounded-lg", classNames]}>
+  {text}
+</a> 

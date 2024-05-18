@@ -1,0 +1,23 @@
+---
+// Navigation Links
+const { class: classNames } = Astro.props
+
+const tempLink = [
+  {link: '/', title: 'Home'},
+  {link: '/about-us', title: 'About'},
+  {link: '/services', title: 'Services'},
+  {link: '/articles', title: 'Articles'},
+  {link: '/contact-us', title: 'Contact'},
+]
+---
+<ul id="menu" class:list={classNames}>
+  {
+    tempLink.map( (item) => (
+    <li>
+      <a href={item.link}
+          class="block py-2 pl-3 pr-4 rounded lg:bg-transparent  lg:p-0 text-center hover:text-brand-yellow"
+          aria-current="page">{item.title}</a>
+    </li>
+    ))
+  }
+</ul>

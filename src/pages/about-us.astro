@@ -1,0 +1,68 @@
+---
+import Layout from "../layouts/Layout.astro";
+import ImageWithHeading from '../components/sections/ImageWithHeading.astro'
+import { sanityClient } from 'sanity:client';
+import PortableText from '../components/PortableText.astro';
+import Jumbotron from "../components/sections/Jumbotron.astro";
+
+// About Us page
+const query = `
+  *[_type == "page" && title == "About Us"]{
+    title,
+    pageBuilder[]{
+      _type == "jumbotron" => {
+        _type,
+        title,
+        body,
+        "image": image.asset->url,
+        displayButton,
+        button
+      },
+      _type == "textWithImage" => {
+        _type,
+        tagline,
+        heading,
+        switchLayout,
+        content,
+        image
+      },
+    }
+  }
+  `
+const data = await sanityClient.fetch(query);
+// console.log(data[0])
+
+const structured = () => {
+  let type: any = {}
+  data[0].pageBuilder.map((item: any) => {
+    const id = item._type
+    if (type[id]) {
+      // check if array
+      if (Array.isArray(type[id])) {
+        type[id].push(item)
+      } else {
+        const newArr = [type[id]]
+        newArr.push(item)
+        type[id] = newArr
+      }
+    } else {
+      type[id] = item
+    }
+    
+  })
+  return type
+}
+const {
+  title = data[0].title, 
+  content = structured(),
+} = Astro.props
+// console.log(content)
+---
+<Layout title={title}>
+  <Jumbotron content={content.jumbotron} />
+  {
+    content.textWithImage?.map((item: any) => (
+    <ImageWithHeading content={item} />
+    ))
+  }
+</Layout>

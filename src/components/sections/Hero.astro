@@ -1,0 +1,36 @@
+---
+const {content, video} = Astro.props
+const bgrdImg = video != true ? `url(${content?.image})` : 'url()'
+---
+<section class="bg-black bg-cover bg-center relative overflow-hidden h-[60vh]">
+  {
+    video &&
+    <div class="overflow-hidden">
+      <video class=" min-w-full max-w-[150vh] min-h-full max-h-full h-[60vh] md:h-full" autoplay loop muted>
+        <source src={content.video} type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  }
+  
+  <div class="absolute top-0 left-0 z-10 w-full h-full bg-gray-800/70 overflow-hidden flex align-center">
+    <div class="px-4 mx-auto max-w-screen-xl text-center h-fit self-center">
+      <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-brand-yellow md:text-5xl lg:text-6xl capitalize">{content?.heading}</h1>
+      <p class="mb-8 text-lg font-normal text-gray-100 lg:text-xl sm:px-16 lg:px-48">{content?.tagline}</p>
+      <div class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0">
+          <a href={content?.button.link} class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-black rounded-lg bg-brand-yellow hover:bg-accent-orange">
+              {content?.button.text}
+              <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+              </svg>
+          </a> 
+      </div>
+    </div>
+  </div>
+</section>
+
+<style define:vars={{bgrdImg}}>
+  section {
+    background-image: var(--bgrdImg);
+  }
+</style>

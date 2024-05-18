@@ -1,0 +1,13 @@
+---
+// Button in Navigation
+const { text, link, class: classNames} = Astro.props
+---
+<a 
+href={link}
+class:list={["focus:ring-4 focus:outline-none font-medium lg:rounded-lg p-4 text-sm lg:text-lg lg:px-10 lg:py-5 lg:mr-2 text-center", classNames]}
+>
+  <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16" class="inline-block mr-1">
+    <path fill="currentColor" d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z" />
+  </svg>
+  <span>{text}</span>
+</a>

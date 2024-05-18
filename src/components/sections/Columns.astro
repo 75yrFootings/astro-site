@@ -1,0 +1,27 @@
+---
+import PortableText from "../PortableText.astro"
+const {content} = Astro.props
+---
+<section class="bg-black my-12 py-12">
+  <div class="py-8 px-4 mx-auto max-w-screen-2xl sm:py-16 lg:px-6">
+    <div class="max-w-screen-md mb-8 lg:mb-16 mx-auto">
+      {
+        content.title &&
+        <h2 class="mb-4 text-5xl tracking-tight font-extrabold text-brand-yellow text-center capitalize">{content?.title}</h2>
+      }      
+    </div>
+    <div class={`space-y-8 md:grid md:grid-cols-2 lg:grid-cols-${content.columnNumber} md:gap-12 md:space-y-0`}>
+      {
+        content?.columns.map((item:any) => (
+        <div class="p-4 rounded-lg shadow border border-dark-red">
+          <h3 class="mb-2 text-3xl font-bold text-accent-orange">{item.headline}</h3>
+          <div class="text-gray-300">
+            <PortableText portableText={item.content} />
+          </div>
+        </div>
+        ))
+      }
+      
+    </div>
+  </div>
+</section>

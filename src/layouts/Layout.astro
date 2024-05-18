@@ -1,0 +1,66 @@
+---
+import Navbar from '../components/Navbar.astro';
+import Banner from '../components/nav/Banner.astro';
+import Logo from '../components/nav/Logo.astro';
+import Footer from '../components/sections/Footer.astro';
+
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Astro description" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+	<body>
+		<header class="fixed w-full z-20 top-0 start-0 h-[84px] lg:h-[120px]">
+			<Banner class="banner text-zinc-400 flex justify-end w-full py-1 max-lg:hidden bg-black" />
+			<Navbar />
+		</header>
+		<main class="mt-[83px] lg:mt-[120px]">
+			<slot />
+		</main>
+		<Footer />
+		<script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.0/flowbite.min.js"></script>
+	</body>
+</html>
+
+<style is:global>
+	:root {
+		--accent: 136, 58, 234;
+		--accent-light: 224, 204, 250;
+		--accent-dark: 49, 10, 101;
+		--accent-gradient: linear-gradient(
+			45deg,
+			rgb(var(--accent)),
+			rgb(var(--accent-light)) 30%,
+			white 60%
+		);
+	}
+	html {
+		font-family: system-ui, sans-serif;
+		background: #ffffff;
+		/* background-size: 224px; */
+	}
+	.prose li {
+    list-style: none;
+  }
+  .prose li::before {
+    display: inline-block;
+    margin: 0 0.5em;
+    color: #9C2525;
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.125em;
+    content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%239C2525' d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417L5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z'/%3E%3C/svg%3E");
+  }
+</style>

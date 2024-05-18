@@ -1,0 +1,66 @@
+---
+import { sanityClient } from "sanity:client";
+import Logo from "./nav/Logo.astro";
+import Links from "./nav/Links.astro";
+import NavButton from "./nav/NavButton.astro";
+
+// Fetch all pages
+const documents = await sanityClient.fetch(`*[_type == "page"]{title, "slug": slug.current}`)
+
+const navLinks = [
+  { title: 'Home', slug: '/' },
+  ...documents
+]
+
+// console.log(navLinks)
+---
+<nav class="bg-black">
+  <div class="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto pb-2 lg:py-2">
+    <Logo 
+      class="flex items-center rtl:space-x-reverse w-1/2 lg:w-auto lg:-mt-12 bg-black" 
+      title="75yr Footings"
+      imgOnly
+    />
+    <div class="flex lg:order-2 space-x-3 lg:space-x-0 rtl:space-x-reverse">
+      <button data-collapse-toggle="navbar-sticky" type="button" class="mr-2 inline-flex items-center p-1 w-10 h-10 justify-center text-sm text-white rounded-lg lg:hidden focus:outline-none focus:ring-2 focus:ring-brand-yellow" aria-controls="navbar-sticky" aria-expanded="false">
+        <span class="sr-only">Open main menu</span>
+        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+        </svg>
+      </button>
+    </div>
+    <div class="items-center justify-between hidden w-full lg:flex lg:w-auto lg:order-1 lg:space-x-8 lg:flex-1" id="navbar-sticky">
+      <NavButton text="Get An Estimate" link="/contact-us" class="flex lg:order-2 items-center justify-center text-black bg-brand-yellow hover:bg-accent-orange focus:ring-accent-orange" />
+      <Links class="flex flex-col p-4 lg:p-0 font-medium lg:space-x-6 xl:space-x-10 rtl:space-x-reverse lg:flex-row lg:mt-0 lg:border-0 text-white lg:text-lg" />
+    </div>
+  </div>
+</nav>
+
+
+<script>
+  const $targetEl = document.getElementById('navbar-sticky')
+  const $triggerEl = document.getElementById('navbar-trigger')
+  
+  if ($triggerEl) {
+    $triggerEl.addEventListener('click', () => {
+      const classes = $targetEl?.classList
+      const hasClass = classes?.contains('expand')
+      if (hasClass === false) {
+        classes?.add('expand')
+      } else {
+        classes?.remove('expand')
+      } 
+      
+    })
+  }
+</script>
+
+<style is:global>
+  #navbar-sticky {
+    overflow: hidden;
+    transition: max-height 1s ease;
+  }
+  #navbar-sticky.expand {
+    max-height: 1000px;
+  }
+</style>

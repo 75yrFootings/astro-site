@@ -1,0 +1,55 @@
+---
+import Jumbotron from "../components/sections/Jumbotron.astro";
+import ContactForm from "../components/sections/ContactForm.astro";
+import Layout from "../layouts/Layout.astro";
+import { sanityClient } from 'sanity:client';
+import FAQs from "../components/sections/FAQs.astro";
+
+const query = `*[_type == "page" && title == "Contact Us"]{
+  title,
+  "page": pageBuilder[],
+  pageBuilder[]{
+    _type == "jumbotron" => {
+        _type,
+        title,
+        body,
+        "image": image.asset->url,
+        displayButton,
+        button
+      },
+    _type == "contentBlock" => {
+      _type,
+      name,
+      blockContent,
+    },
+    _type == "faqs" => @->,
+  }
+}`
+const data = await sanityClient.fetch(query);
+const {
+  title = data[0].title,
+  content = data[0]
+  } = Astro.props
+---
+<Layout title={title}>
+  <div>
+  {
+    content.pageBuilder?.map((section: any) => {
+      if (section._type == 'jumbotron') {
+        return <Jumbotron content={section} />
+      }
+      if (section._type == 'contentBlock') {
+        return (
+                <section class="max-w-screen-xl px-4 py-8 mx-auto lg:py-16">
+                  <h1 class="mx-auto text-center max-w-2xl mb-8 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl capitalize">{section.name}</h1>
+                  <ContactForm />
+                </section>
+        )
+      }
+      if (section._type == 'faqsList') {
+        return <FAQs content={section} />
+      }
+    })
+  }
+  </div>
+</Layout>
