@@ -5,10 +5,12 @@ import Jumbotron from "../components/sections/Jumbotron.astro";
 import ContentBlock from '../components/sections/ContentBlock.astro';
 import Columns from '../components/sections/Columns.astro';
 import FAQs from '../components/sections/FAQs.astro';
+import MetaTags from '../components/utils/MetaTags.astro';
 
 
 const query = `*[_type == "page" && title == "Services"]{
   title,
+  meta,
   "page": pageBuilder[],
   pageBuilder[]{
     _type == "jumbotron" => {
@@ -38,8 +40,9 @@ const {
   title = data[0].title,
   content = data[0],
 } = Astro.props
+const meta = data[0].meta
 ---
-<Layout title={title}>
+<Layout title={title} meta={meta}>
   {
     content.pageBuilder?.map((section: any) => {
       if (section._type == 'jumbotron') {

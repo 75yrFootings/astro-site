@@ -5,9 +5,14 @@ import PortableText from '../../components/PortableText.astro';
 import Layout from '../../layouts/Layout.astro';
 
 export async function getStaticPaths() {
-  const posts = await sanityClient.fetch(`*[_type == "post"]`);
+  const query = `*[_type == "post"]{
+    ...,
+    author->{name}
+  }`
+  const posts = await sanityClient.fetch(query);
 
   return posts.map((post: any) => {
+    console.log(post)
     return {
       params: {
         slug: post.slug?.current || '',
@@ -16,12 +21,43 @@ export async function getStaticPaths() {
     };
   });
 }
+interface Props {
+  title?: any,
+  meta?: any,
+  mainImage?: any,
+  body?: any,
+  author: any,
+  publishedAt?: any,
+  _updatedAt?: any,
+}
 
-const { title, body } = Astro.props;
-
+const { title, meta, mainImage, body, author, publishedAt, _updatedAt } = Astro.props;
+const pubDate = new Date(publishedAt).toLocaleDateString()
+const isoDate = new Date(publishedAt).toString()
 ---
-<Layout title="Welcome to Astro.">
-  <h1>{title}</h1>
-
-  <PortableText portableText={body} />
+<Layout title={title} meta={meta}>
+  <div class="flex justify-between px-4 my-8 mx-auto max-w-screen-xl antialiased">
+    <article class="mx-auto w-full max-w-2xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
+      <header class="my-4 lg:mb-6 not-format">
+        <PortableText portableText={mainImage} />
+        <address class="flex items-center my-6 not-italic">
+            <div class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
+                <div class="flex">
+                    <p class="text-base text-gray-500 dark:text-gray-400">
+                      <time datetime={isoDate}>{pubDate}</time>
+                    </p>
+                    <p class="px-2 text-base text-gray-500 dark:text-gray-400"> - </p>
+                    <p class="text-base text-gray-500 dark:text-gray-400">
+                      {author?.name ? author.name : '75yr Footings'}
+                    </p>
+                </div>
+            </div>
+        </address>
+        <h1 class="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl">{title}</h1>
+      </header>
+      <div class="prose">
+        <PortableText portableText={body} />
+      </div>
+    </article>
+  </div>
 </Layout>

@@ -1,18 +1,13 @@
 ---
-import { sanityClient } from "sanity:client";
 import Logo from "./nav/Logo.astro";
 import Links from "./nav/Links.astro";
 import NavButton from "./nav/NavButton.astro";
 
-// Fetch all pages
-const documents = await sanityClient.fetch(`*[_type == "page"]{title, "slug": slug.current}`)
+interface Props {
+  menuItems: object[]
+}
 
-const navLinks = [
-  { title: 'Home', slug: '/' },
-  ...documents
-]
-
-// console.log(navLinks)
+const {menuItems} =Astro.props
 ---
 <nav class="bg-black">
   <div class="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto pb-2 lg:py-2">
@@ -31,7 +26,7 @@ const navLinks = [
     </div>
     <div class="items-center justify-between hidden w-full lg:flex lg:w-auto lg:order-1 lg:space-x-8 lg:flex-1" id="navbar-sticky">
       <NavButton text="Get An Estimate" link="/contact-us" class="flex lg:order-2 items-center justify-center text-black bg-brand-yellow hover:bg-accent-orange focus:ring-accent-orange" />
-      <Links class="flex flex-col p-4 lg:p-0 font-medium lg:space-x-6 xl:space-x-10 rtl:space-x-reverse lg:flex-row lg:mt-0 lg:border-0 text-white lg:text-lg" />
+      <Links items={menuItems} class="flex flex-col p-4 lg:p-0 font-medium lg:space-x-6 xl:space-x-10 rtl:space-x-reverse lg:flex-row lg:mt-0 lg:border-0 text-white lg:text-lg" />
     </div>
   </div>
 </nav>

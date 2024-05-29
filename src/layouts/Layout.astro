@@ -1,35 +1,35 @@
 ---
 import Navbar from '../components/Navbar.astro';
 import Banner from '../components/nav/Banner.astro';
-import Logo from '../components/nav/Logo.astro';
 import Footer from '../components/sections/Footer.astro';
-
+import MetaTags from '../components/utils/MetaTags.astro';
+import { GetNavLinks } from '../lib/getNavLinks';
 interface Props {
 	title: string;
+	meta: object;
+	frontPage?: boolean;
 }
 
-const { title } = Astro.props;
+const { title, meta, frontPage = false } = Astro.props;
+
+const menu = await GetNavLinks()
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
-		<meta name="viewport" content="width=device-width" />
+		<MetaTags pageTitle={title} metaData={meta} isFrontPage={frontPage} />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
 	</head>
 	<body>
 		<header class="fixed w-full z-20 top-0 start-0 h-[84px] lg:h-[120px]">
 			<Banner class="banner text-zinc-400 flex justify-end w-full py-1 max-lg:hidden bg-black" />
-			<Navbar />
+			<Navbar menuItems={menu.mainMenu} />
 		</header>
 		<main class="mt-[83px] lg:mt-[120px]">
 			<slot />
 		</main>
-		<Footer />
+		<Footer menuItems={menu.footerMenu} />
 		<script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.0/flowbite.min.js"></script>
 	</body>
 </html>
@@ -49,7 +49,6 @@ const { title } = Astro.props;
 	html {
 		font-family: system-ui, sans-serif;
 		background: #ffffff;
-		/* background-size: 224px; */
 	}
 	.prose li {
     list-style: none;

@@ -30,8 +30,9 @@ const {
   title = data[0].title,
   content = data[0]
   } = Astro.props
+const meta = data[0].meta
 ---
-<Layout title={title}>
+<Layout title={title} meta={meta}>
   <div>
   {
     content.pageBuilder?.map((section: any) => {

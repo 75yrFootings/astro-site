@@ -31,7 +31,9 @@ const query = `
 		title,
 		content,
 		"testimonials": testimonials[]->,
-	}
+	},
+	meta,
+	_type,
 }
 `
 const data = await sanityClient.fetch(query);
@@ -41,10 +43,11 @@ const {
 	cta = data[0].cta,
 	testimonials = data[0].testimonials,
 } = Astro.props
-// console.log(content[5])
+const meta = data[0].meta
+const pageType = data[0]._type == 'frontPage' ? true : false
 ---
 
-<Layout title="75yr Footings">
+<Layout title={meta.titleTag} meta={meta} frontPage={pageType} >
 	<Hero content={heroContent} video={heroContent.mediaType} />
 	{
 		content?.map((section:any) => {

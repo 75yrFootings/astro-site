@@ -1,20 +1,16 @@
 ---
 // Navigation Links
-const { class: classNames } = Astro.props
-
-const tempLink = [
-  {link: '/', title: 'Home'},
-  {link: '/about-us', title: 'About'},
-  {link: '/services', title: 'Services'},
-  {link: '/articles', title: 'Articles'},
-  {link: '/contact-us', title: 'Contact'},
-]
+interface Props {
+  items: object[],
+  class?: string
+}
+const { items, class: classNames } = Astro.props
 ---
 <ul id="menu" class:list={classNames}>
   {
-    tempLink.map( (item) => (
+    items?.map( (item: any) => (
     <li>
-      <a href={item.link}
+      <a href={"/" + item.slug}
           class="block py-2 pl-3 pr-4 rounded lg:bg-transparent  lg:p-0 text-center hover:text-brand-yellow"
           aria-current="page">{item.title}</a>
     </li>

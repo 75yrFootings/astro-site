@@ -56,9 +56,9 @@ const {
   title = data[0].title, 
   content = structured(),
 } = Astro.props
-// console.log(content)
+const meta = data[0].meta
 ---
-<Layout title={title}>
+<Layout title={title} meta={meta}>
   <Jumbotron content={content.jumbotron} />
   {
     content.textWithImage?.map((item: any) => (

@@ -1,0 +1,26 @@
+---
+interface Props {
+  metaData: {
+    titleTag?: string | undefined;
+    description?: string | undefined,
+    author?: string | undefined,
+  };
+  pageTitle?: string,
+  isFrontPage?: boolean,
+}
+const {metaData, pageTitle, isFrontPage = false} = Astro.props
+let title
+if (metaData?.titleTag) {
+  title = metaData?.titleTag
+} else if (isFrontPage != false) {
+  title = 'Home'
+} else {
+  title = pageTitle
+}
+---
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{title} | 75yr Footings</title>
+<meta name="description" content={metaData?.description}>
+<meta name="author" content={metaData?.author ? metaData.author : '75yr Footings'}>
+<meta name="robots" content="index, follow">

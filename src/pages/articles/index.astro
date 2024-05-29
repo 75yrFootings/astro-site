@@ -3,12 +3,13 @@ import { sanityClient } from 'sanity:client';
 import Layout from "../../layouts/Layout.astro";
 import Jumbotron from "../../components/sections/Jumbotron.astro";
 import ContentBlock from '../../components/sections/ContentBlock.astro';
-import Columns from '../../components/sections/Columns.astro';
-import FAQs from '../../components/sections/FAQs.astro';
+import FeaturedPosts from '../../components/sections/FeaturedPosts.astro'
+import PostList from '../../components/sections/PostList.astro';
 
 
 const query = `*[_type == "page" && title == "Articles"]{
   title,
+  meta,
   "page": pageBuilder[],
   pageBuilder[]{
     _type == "jumbotron" => {
@@ -30,19 +31,29 @@ const query = `*[_type == "page" && title == "Articles"]{
     "slug": slug.current,
     publishedAt,
     author->{name},
-    "mainImage": mainImage.asset->url,
+    "mainImage": {
+      "url": mainImage.asset->url,
+      "alt": imageAlt
+    },
     body,
   }
 }`
 const data = await sanityClient.fetch(query);
+const allPosts = await sanityClient.fetch(`*[_type == "post"] | order(publishedAt desc){
+  title,
+  publishedAt,
+  "slug": slug.current,
+  "image": mainImage.asset->url,
+  body,
+}`)
 const {
   title = data[0].title,
   content = data[0],
   featuredPosts = data[0].featuredPosts
 } = Astro.props
-console.log(featuredPosts[0])
+const meta = data[0].meta
 ---
-<Layout title={title}>
+<Layout title={title} meta={meta}>
   {
     content.pageBuilder?.map((section: any) => {
       if (section._type == 'jumbotron') {
@@ -53,4 +64,6 @@ console.log(featuredPosts[0])
       }
     })
   }
+  <FeaturedPosts posts={featuredPosts} />
+  <PostList posts={allPosts} />
 </Layout>
