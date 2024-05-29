@@ -7,6 +7,7 @@ import icon from "astro-icon";
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://75yrfootings.com',
   integrations: [tailwind(), sitemap(), sanity({
     projectId: "5mv8hczt",
     dataset: "production",
