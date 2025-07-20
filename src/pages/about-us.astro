@@ -9,6 +9,7 @@ import Jumbotron from "../components/sections/Jumbotron.astro";
 const query = `
   *[_type == "page" && title == "About Us"]{
     title,
+    meta,
     pageBuilder[]{
       _type == "jumbotron" => {
         _type,
