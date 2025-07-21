@@ -21,6 +21,15 @@ const menu = await GetNavLinks()
 		<MetaTags pageTitle={title} metaData={meta} isFrontPage={frontPage} />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="sitemap" href="/sitemap-index.xml" />
+		<!-- Google tag (gtag.js) -->
+		<script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-0Y3KQKR71B"></script>
+		<script is:inline>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+
+			gtag('config', 'G-0Y3KQKR71B');
+		</script>
 	</head>
 	<body>
 		<header class="fixed w-full z-20 top-0 start-0 h-[84px] lg:h-[120px]">
