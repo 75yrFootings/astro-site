@@ -33,18 +33,17 @@ const menu = await GetNavLinks()
 		<script is:inline type="application/ld+json">
 		{
 			"@context": "http://schema.org",
-			"@type": "LocalBusiness",
+			"@type": "Organization",
 			"name": "75yr Footings",
+			"url" : "https://75yrfootings.com",
 			"image": "https://75yrfootings.com/_astro/75yrFootings-logo.QlFBDE79_2iNk0P.svg",
-			"telephone": "608-571-2721",
-			"email": "info@75yrfootings.com",
-			"openingHoursSpecification": {
-				"@type": "OpeningHoursSpecification",
-				"dayOfWeek": {
-					"@type": "DayOfWeek",
-					"name": "Mon - Fri"
-				}
-			}
+			"contactPoint": {
+			"@type": "ContactPoint",
+			"telephone": "+1-608-571-2721",
+			"contactType": "Sales and Information",
+			"areaServed": "US",
+			},
+			"email": "info@75yrfootings.com"
 		}
 </script>
 	</head>
