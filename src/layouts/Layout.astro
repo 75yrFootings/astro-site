@@ -12,7 +12,8 @@ interface Props {
 
 const { title, meta, frontPage = false } = Astro.props;
 
-const menu = await GetNavLinks()
+const menu = await GetNavLinks();
+const fullUrl = Astro.url.href;
 ---
 
 <!doctype html>
@@ -21,6 +22,7 @@ const menu = await GetNavLinks()
 		<MetaTags pageTitle={title} metaData={meta} isFrontPage={frontPage} />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="sitemap" href="/sitemap-index.xml" />
+		<link rel="canonical" href={fullUrl} />
 		<!-- Google tag (gtag.js) -->
 		<script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-0Y3KQKR71B"></script>
 		<script is:inline>
