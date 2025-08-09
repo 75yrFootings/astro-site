@@ -32,16 +32,22 @@ const menu = await GetNavLinks()
 		</script>
 		<script is:inline type="application/ld+json">
 		{
-			"@context": "http://schema.org",
-			"@type": "Organization",
-			"name": "75yr Footings",
+			"@context" : "http://schema.org",
+			"@type" : "Organization",
+			"@id" : "https://75yrfootings.com#Organization",
+			"name" : "75yr Footings",
 			"url" : "https://75yrfootings.com",
-			"image": "https://75yrfootings.com/_astro/75yrFootings-logo.QlFBDE79_2iNk0P.svg",
-			"email": "info@75yrfootings.com",
+			"logo" : {
+				"@type" : "ImageObject",
+				"url" : "https://75yrfootings.com/_astro/75yrFootings-logo.QlFBDE79_2iNk0P.svg",
+				"width" : "300",
+				"height" : "120"
+			},
 			"contactPoint": {
-				"@type": "ContactPoint",
-				"telephone": "+1-608-571-2721",
-				"contactType": "Sales and Information",
+				"@type" : "ContactPoint",
+				"contactType" : "customer support",
+				"telephone" : "+1-608-571-2721",
+				"url" : "https://75yrfootings.com/contact-us"
 			}
 		}
 </script>
